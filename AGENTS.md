@@ -398,6 +398,42 @@ agent-manager -vvv config show
 5. **Hook System**: Extensibility without modifying core code
 6. **Type-Aware Merging**: Different strategies for different content types
 
+## Plugin Ecosystem
+
+### Naming Convention
+All plugins follow the `am_<type>_<name>` pattern:
+- **Agents**: `am_agent_<name>` (discovered by package prefix)
+- **Mergers**: `am_merger_<name>` (discovered via entry points)
+- **Repos**: `am_repo_<name>` (future)
+
+### Official Companion Plugins
+
+| Plugin | GitHub | Description |
+|--------|--------|-------------|
+| **am-agent-claude** | [john-westcott-iv/am-agent-claude](https://github.com/john-westcott-iv/am-agent-claude) | Claude/Cursor AI agent integration |
+| **am-merger-smart-markdown** | [john-westcott-iv/am_merger_smart_markdown](https://github.com/john-westcott-iv/am_merger_smart_markdown) | Section-aware Markdown merging using mistletoe |
+
+### Plugin Discovery
+
+**Agents** are discovered by package prefix:
+```python
+# Packages starting with 'am_agent_' are auto-discovered
+# e.g., am_agent_claude -> agent name: "claude"
+agent-manager agents list
+agent-manager run --agent claude
+```
+
+**Mergers** are discovered via entry points:
+```toml
+# In pyproject.toml
+[project.entry-points."agent_manager.mergers"]
+smart_markdown = "am_merger_smart_markdown.smart_markdown_merger:SmartMarkdownMerger"
+```
+
+```bash
+agent-manager mergers list  # Shows registered and available mergers
+```
+
 ## Future Considerations
 
 - Consider fixing 6 failing integration tests (Mock attribute assignment issues)
@@ -407,8 +443,9 @@ agent-manager -vvv config show
 
 ---
 
-**Last Updated**: November 22, 2025  
+**Last Updated**: December 2025  
 **Version**: 1.0.0  
 **Python**: 3.12+  
 **Key Dependencies**: Click, PyYAML, GitPython
+**License**: Apache 2.0
 

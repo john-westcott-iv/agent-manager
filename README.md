@@ -57,14 +57,32 @@ agent-manager config show
 
 ---
 
+## Companion Plugins
+
+Official plugins available for Agent Manager:
+
+| Plugin | Description | Install |
+|--------|-------------|---------|
+| **[am-agent-claude](https://github.com/john-westcott-iv/am-agent-claude)** | Claude/Cursor AI agent integration | `pip install -e am_agent_claude/` |
+| **[am-merger-smart-markdown](https://github.com/john-westcott-iv/am_merger_smart_markdown)** | Section-aware Markdown merging | `pip install -e am_merger_smart_markdown/` |
+
+---
+
 ## Development
+
+### Plugin Naming Convention
+
+All plugins follow the `am_<type>_<name>` pattern:
+- **Agents**: `am_agent_<name>` (e.g., `am_agent_claude`)
+- **Mergers**: `am_merger_<name>` (e.g., `am_merger_smart_markdown`)
+- **Repos**: `am_repo_<name>` (e.g., `am_repo_s3`)
 
 ### Creating Agent Plugins
 
-Create a package named `ai_agent_*`:
+Create a package named `am_agent_*`:
 
 ```python
-# ai_agent_yourplugin/yourplugin.py
+# am_agent_yourplugin/yourplugin.py
 from agent_manager.plugins.agents import AbstractAgent
 from pathlib import Path
 
@@ -90,7 +108,7 @@ class Agent(AbstractAgent):
 Install and it's auto-discovered:
 
 ```bash
-pip install -e ai_agent_yourplugin/
+pip install -e am_agent_yourplugin/
 agent-manager run --agent yourplugin
 ```
 
@@ -107,8 +125,13 @@ agent-manager (Core)
 ├── Merge System (Type-aware, pluggable strategies)
 └── Agent Plugins (Auto-discovered)
 
-ai_agent_* (Plugins)
-└── Tool-specific implementations
+am_agent_* (Agent Plugins)
+├── am_agent_claude - Claude/Cursor integration
+└── Your custom agents...
+
+am_merger_* (Merger Plugins)
+├── am_merger_smart_markdown - Section-aware MD merging
+└── Your custom mergers...
 ```
 
 See **[Architecture Overview](docs/ARCHITECTURE.md)** for details.
@@ -117,7 +140,7 @@ See **[Architecture Overview](docs/ARCHITECTURE.md)** for details.
 
 ## License
 
-MIT License - see [LICENSE](../LICENSE) for details.
+Apache License 2.0 - see [LICENSE](LICENSE) for details.
 
 ---
 
@@ -125,4 +148,7 @@ MIT License - see [LICENSE](../LICENSE) for details.
 
 - **Documentation**: [docs/](docs/)
 - **GitHub**: https://github.com/john-westcott-iv/agent-manager
+- **Plugins**:
+  - [am-agent-claude](https://github.com/john-westcott-iv/am-agent-claude)
+  - [am-merger-smart-markdown](https://github.com/john-westcott-iv/am_merger_smart_markdown)
 
