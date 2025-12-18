@@ -6,13 +6,15 @@ import pkgutil
 from pathlib import Path
 
 from agent_manager.output import MessageType, VerbosityLevel, message
+from agent_manager.utils import discover_external_plugins
 
 
 def discover_merger_classes():
-    """Dynamically discover all merger classes in the mergers package.
+    """Dynamically discover all merger classes.
 
-    Scans the plugins.mergers package for all classes that inherit from AbstractMerger
-    (excluding AbstractMerger itself and CopyMerger which is the default fallback).
+    Discovers mergers from two sources:
+    1. Built-in: Scans the plugins.mergers package for AbstractMerger subclasses
+    2. External: Discovers plugins via entry points under 'agent_manager.mergers'
 
     Returns:
         List of merger classes
@@ -21,7 +23,36 @@ def discover_merger_classes():
 
     merger_classes = []
 
-    # Get the mergers package path
+    # === Part 1: Discover built-in mergers ===
+    merger_classes.extend(_discover_builtin_mergers(AbstractMerger))
+
+    # === Part 2: Discover external merger plugins via entry points ===
+    external_plugins = discover_external_plugins(
+        plugin_type="merger",
+        entry_point_group="agent_manager.mergers",
+        base_class=AbstractMerger,
+    )
+
+    for plugin_info in external_plugins.values():
+        if "class" in plugin_info:
+            merger_class = plugin_info["class"]
+            if merger_class not in merger_classes:
+                merger_classes.append(merger_class)
+
+    return merger_classes
+
+
+def _discover_builtin_mergers(abstract_merger_class: type) -> list[type]:
+    """Discover built-in merger classes from the plugins.mergers package.
+
+    Args:
+        abstract_merger_class: The AbstractMerger base class
+
+    Returns:
+        List of built-in merger classes
+    """
+    merger_classes = []
+
     import agent_manager.plugins.mergers as mergers_package
 
     mergers_package_path = Path(mergers_package.__file__).parent
@@ -48,7 +79,11 @@ def discover_merger_classes():
             for _name, obj in inspect.getmembers(module, inspect.isclass):
                 # Check if it's a subclass of AbstractMerger
                 # (but not AbstractMerger itself)
-                if issubclass(obj, AbstractMerger) and obj is not AbstractMerger and obj.__module__ == module.__name__:
+                if (
+                    issubclass(obj, abstract_merger_class)
+                    and obj is not abstract_merger_class
+                    and obj.__module__ == module.__name__
+                ):
                     merger_classes.append(obj)
 
         except ImportError:

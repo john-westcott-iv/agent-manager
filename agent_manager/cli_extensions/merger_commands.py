@@ -61,7 +61,9 @@ class MergerCommands:
             self.configure_mergers(config, args.merger)
 
     def list_mergers(self) -> None:
-        """List all registered mergers."""
+        """List all registered and available mergers."""
+        from agent_manager.core.mergers import discover_merger_classes
+
         message("\n=== Registered Mergers ===\n", MessageType.NORMAL, VerbosityLevel.ALWAYS)
 
         registered = self.merger_registry.list_registered_mergers()
@@ -86,6 +88,22 @@ class MergerCommands:
         message("Default fallback merger:", MessageType.NORMAL, VerbosityLevel.ALWAYS)
         message(f"  {registered['default']}", MessageType.NORMAL, VerbosityLevel.ALWAYS)
         message("", MessageType.NORMAL, VerbosityLevel.ALWAYS)
+
+        # Show available but unregistered mergers
+        all_discovered = discover_merger_classes()
+        registered_classes = set(self.merger_registry.filename_mergers.values())
+        registered_classes.update(self.merger_registry.extension_mergers.values())
+        registered_classes.add(self.merger_registry.default_merger)
+
+        unregistered = [m for m in all_discovered if m not in registered_classes]
+
+        if unregistered:
+            message("Available but not registered:", MessageType.NORMAL, VerbosityLevel.ALWAYS)
+            for merger_class in sorted(unregistered, key=lambda c: c.__name__):
+                extensions = getattr(merger_class, "FILE_EXTENSIONS", [])
+                ext_str = f" (handles: {', '.join(extensions)})" if extensions else ""
+                message(f"  {merger_class.__name__}{ext_str}", MessageType.NORMAL, VerbosityLevel.ALWAYS)
+            message("", MessageType.NORMAL, VerbosityLevel.ALWAYS)
 
     def show_merger(self, merger_name: str) -> None:
         """Show preferences for a specific merger.
@@ -256,11 +274,13 @@ class MergerCommands:
         message(f"✓ Merger preferences saved to {config.config_file}\n", MessageType.SUCCESS, VerbosityLevel.ALWAYS)
 
     def _get_all_merger_classes(self) -> list[type]:
-        """Get all unique merger classes from the registry.
+        """Get all unique merger classes (registered and discovered).
 
         Returns:
             List of merger classes
         """
+        from agent_manager.core.mergers import discover_merger_classes
+
         merger_classes = set()
 
         # Add filename mergers
@@ -274,10 +294,16 @@ class MergerCommands:
         # Add default merger
         merger_classes.add(self.merger_registry.default_merger)
 
+        # Add all discovered mergers (including unregistered ones)
+        for merger_class in discover_merger_classes():
+            merger_classes.add(merger_class)
+
         return sorted(merger_classes, key=lambda c: c.__name__)
 
     def _find_merger_class(self, merger_name: str) -> type | None:
         """Find a merger class by name.
+
+        Searches both registered and discovered mergers.
 
         Args:
             merger_name: Name of the merger class
