@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "mcp-server-filesystem",
+      "args": ["--root", "/Users/john/projects"],
+      "description": "Access my local project files"
+    },
+    "git": {
+      "command": "mcp-server-git",
+      "args": ["--repos", "/Users/john/projects"],
+      "description": "Git operations on my repos"
+    },
+    "localhost": {
+      "command": "mcp-server-fetch",
+      "args": ["--allowed-domains", "localhost:8000,localhost:3000"],
+      "description": "Access local development servers"
+    },
+    "postgres-local": {
+      "command": "mcp-server-postgres",
+      "args": ["--database", "john_local_dev"],
+      "env": {
+        "POSTGRES_URL": "postgresql://localhost/john_local_dev"
+      },
+      "description": "My local PostgreSQL database"
+    }
+  },
+  "user": "john",
+  "preferences": {
+    "verbose_output": true,
+    "auto_approve": false
+  }
+}
+

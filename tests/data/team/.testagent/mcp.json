@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "mcp-server-postgres",
+      "args": ["--database", "backend_dev"],
+      "env": {
+        "POSTGRES_URL": "${DATABASE_URL}"
+      }
+    },
+    "redis": {
+      "command": "mcp-server-redis",
+      "args": ["--host", "localhost"],
+      "env": {
+        "REDIS_URL": "${REDIS_URL}"
+      }
+    },
+    "aws": {
+      "command": "mcp-server-aws",
+      "args": ["--region", "us-east-1"],
+      "env": {
+        "AWS_PROFILE": "backend-team"
+      }
+    }
+  },
+  "team": "Backend Engineering"
+}
+

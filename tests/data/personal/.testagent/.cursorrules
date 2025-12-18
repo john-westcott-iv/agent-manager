@@ -1,0 +1,30 @@
+# Personal Preferences - John's Setup
+
+## My Coding Style
+- Prefer functional programming patterns
+- Use list comprehensions when readable
+- Add TODO comments for future improvements
+- Keep functions under 50 lines when possible
+
+## Personal Tools
+- Use ipdb for debugging
+- Prefer rich for CLI output
+- Use httpx instead of requests
+
+## AI Assistant Preferences
+- Explain complex algorithms step-by-step
+- Suggest performance optimizations
+- Point out potential security issues
+- Provide examples with edge cases
+
+## Work Environment
+- Development machine: MacBook Pro M2
+- Preferred editor: Cursor
+- Terminal: iTerm2 with oh-my-zsh
+- Python virtual env manager: venv
+
+## Personal Notes
+- Focus on payment-service this sprint
+- Learning: async programming patterns
+- Side project: building a CLI tool for deployment
+

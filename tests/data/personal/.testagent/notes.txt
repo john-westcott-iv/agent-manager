@@ -1,0 +1,33 @@
+Personal Development Notes
+===========================
+
+Current Sprint Tasks:
+- Implement rate limiting for payment endpoints
+- Fix memory leak in background worker
+- Add monitoring dashboards for payment flow
+
+Ideas to Explore:
+- Use Redis Streams for event processing
+- Implement circuit breaker pattern
+- Add request correlation IDs
+
+Code Review Feedback Received:
+- Break down large functions into smaller ones
+- Add more error context in exceptions
+- Improve test data factories
+
+Things to Learn:
+- Advanced asyncio patterns
+- Kubernetes CRDs and Operators
+- gRPC for service-to-service communication
+
+Side Project Ideas:
+- CLI tool for deploying services
+- Monitoring dashboard
+- Developer productivity metrics tool
+
+Meeting Notes:
+- Team agreed on new API versioning strategy
+- Moving to k8s for all services Q2
+- Need to document service dependencies better
+

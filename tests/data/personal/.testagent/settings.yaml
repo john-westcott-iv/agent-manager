@@ -1,0 +1,47 @@
+user:
+  name: "John Westcott IV"
+  email: "john@example.com"
+  github: "john-westcott-iv"
+
+editor:
+  name: "Cursor"
+  theme: "dark"
+  font_size: 14
+  format_on_save: true
+
+python:
+  additional_packages:
+    - ipdb
+    - rich
+    - httpx
+    - typer
+  
+  testing:
+    # My personal preference - higher coverage
+    min_coverage: 90
+    show_missing_lines: true
+    generate_html_report: true
+
+local_dev:
+  api_port: 8000
+  debug_mode: true
+  reload_on_change: true
+  log_level: "DEBUG"
+
+shortcuts:
+  test: "pytest -v"
+  test_coverage: "pytest --cov=. --cov-report=html"
+  format: "ruff format ."
+  lint: "ruff check ."
+  run_dev: "uvicorn main:app --reload --port 8000"
+
+focus_areas:
+  - payment-service
+  - rate-limiting improvements
+  - async migration
+
+learning_goals:
+  - Advanced async patterns
+  - GraphQL implementation
+  - Kubernetes operators
+

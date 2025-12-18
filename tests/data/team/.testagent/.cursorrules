@@ -1,0 +1,31 @@
+# Backend Team - Additional Standards
+
+## Team-Specific Rules
+- Use async/await for I/O operations
+- Implement proper error handling with custom exceptions
+- Use dependency injection for testability
+- Add logging at INFO level for business logic
+
+## Database
+- Use SQLAlchemy ORM
+- Always use migrations for schema changes
+- Index all foreign keys
+- Use connection pooling
+
+## API Development
+- Follow REST principles
+- Use Pydantic for request/response validation
+- Document all endpoints with OpenAPI/Swagger
+- Implement rate limiting
+
+## Performance
+- Profile code before optimization
+- Use caching where appropriate (Redis)
+- Implement pagination for list endpoints
+- Monitor query performance
+
+## Team Conventions
+- Daily standup at 10 AM
+- Sprint planning every other Monday
+- Code review within 24 hours
+

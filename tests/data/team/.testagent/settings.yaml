@@ -1,0 +1,46 @@
+team:
+  name: "Backend Engineering"
+  slack_channel: "#backend-team"
+  tech_lead: "jane.doe"
+
+services:
+  - api-gateway
+  - user-service
+  - payment-service
+  - notification-service
+
+python:
+  additional_packages:
+    - fastapi
+    - sqlalchemy
+    - alembic
+    - redis
+    - boto3
+  
+  testing:
+    # Override org requirement
+    min_coverage: 85
+    integration_test_timeout: 300
+
+databases:
+  postgres:
+    version: "15"
+    pool_size: 20
+  
+  redis:
+    version: "7"
+    max_connections: 100
+
+monitoring:
+  apm: "datadog"
+  log_level: "INFO"
+  trace_sampling: 0.1
+
+deployment:
+  kubernetes:
+    namespace: "backend"
+    replicas: 3
+    resources:
+      cpu: "500m"
+      memory: "1Gi"
+

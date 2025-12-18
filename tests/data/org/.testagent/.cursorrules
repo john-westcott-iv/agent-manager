@@ -1,0 +1,22 @@
+# Organization-Wide Coding Standards
+
+## General Rules
+- Use meaningful variable names
+- Write comprehensive tests
+- Follow security best practices
+- Document all public APIs
+
+## Code Style
+- Maximum line length: 120 characters
+- Use type hints in Python
+- Prefer composition over inheritance
+
+## Git Workflow
+- Create feature branches from main
+- Require code reviews before merging
+- Write descriptive commit messages
+
+## Testing
+- Minimum 80% code coverage required
+- All tests must pass before merge
+

@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "company-docs": {
+      "command": "mcp-server-docs",
+      "args": ["--source", "https://docs.company.com"],
+      "env": {
+        "API_KEY": "${COMPANY_DOCS_API_KEY}"
+      }
+    },
+    "jira": {
+      "command": "mcp-server-jira",
+      "args": ["--instance", "company.atlassian.net"],
+      "env": {
+        "JIRA_TOKEN": "${JIRA_API_TOKEN}"
+      }
+    }
+  },
+  "version": "1.0",
+  "organization": "ACME Corp"
+}
+
